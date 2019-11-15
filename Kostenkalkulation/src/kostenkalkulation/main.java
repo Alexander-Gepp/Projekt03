@@ -6,6 +6,7 @@ public class main {
 		// TODO Auto-generated method stub
 		// Programmbasis
 		System.out.println("test");
+		System.out.println("JA MOIN ITS ME MARIO");
 
 	}
 
