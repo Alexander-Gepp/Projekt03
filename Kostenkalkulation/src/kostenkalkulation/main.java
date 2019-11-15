@@ -7,6 +7,7 @@ public class main {
 		// Programmbasis
 		System.out.println("test");
 		System.out.println("JA MOIN ITS ME MARIO");
+		System.out.println("Hallo Welt! Hier ist Tim");
 
 	}
 
