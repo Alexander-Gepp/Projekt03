@@ -4,10 +4,10 @@ import javax.swing.*;
 
 public class Controller {
 
-	private double fixcostInput;
-	private double varcostInput;
-	private int personInput;
-	private GUI gui;
+	private static double fixcostInput;
+	private static double varcostInput;
+	private static int personInput;
+	private static GUI gui;
 	
 	public Controller() {
 		createGUI();
@@ -18,25 +18,35 @@ public class Controller {
 		gui.createWindow(700, 500);
 		gui.createLabels(150, 20, 50);
 		gui.createTextFields(150, 20, 50);
-	}
-	
-	public void clickCalc(JButton calculate) {
+		gui.createDBList(600, 150, 50);
+		gui.createButtons(150, 30, 20);
 		
+		gui.getPanel().repaint();
 	}
 	
-	public void clickExit(JButton exit) {
+	public static void clickCalc(JButton calculate) {
+		getInputFromGUI(gui);
+	}
+	
+	public static void clickExit(JButton exit) {
 		System.exit(0);
 	}
 	
-	public void clickNewEntry(JButton newEntry) {
+	public static void clickNewEntry(JButton newEntry) {
 		
 	}
 	
-	public void clickDeleteEntry(JButton delEntry) {
+	public static void clickDeleteEntry(JButton delEntry) {
 		
 	}
 	
-	public void getInputFromGUI(GUI gui) {
+	private static void getInputFromGUI(GUI gui) {
+		fixcostInput = Double.parseDouble(gui.getFixCostTxt().getText());
+		varcostInput = Double.parseDouble(gui.getVarCostTxt().getText());
+		personInput = Integer.parseInt(gui.getPersonTxt().getText());
+		
+		System.out.println(fixcostInput);
+		
 		
 	}
 }

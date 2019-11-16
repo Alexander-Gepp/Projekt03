@@ -1,6 +1,8 @@
 package kostenkalkulation;
 
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
@@ -56,7 +58,6 @@ public class GUI {
 		panel.add(varcostLabel);
 		panel.add(personLabel);
 		panel.add(databaseLabel);
-		panel.repaint();
 		
 	}
 	
@@ -77,15 +78,87 @@ public class GUI {
 		panel.add(fixcostTxt);
 		panel.add(varcostTxt);
 		panel.add(personTxt);
-		
-		panel.repaint();
 	}
 	
-	public void createDBList(int width, int height) {
+	public void createDBList(int width, int height, int offset) {
+		databaseTxtList = new JTextArea();
 		
+		databaseTxtList.setBounds(offset, (int)databaseLabel.getBounds().getY() + databaseLabel.getHeight() + 10, 
+								  width, height);
+		
+		panel.add(databaseTxtList);
 	}
 	
-	public void createButtons(int width, int height) {
+	public void createButtons(int width, int height, int offset) {
+		calcButton = new JButton("Berechnen");
+		exitButton = new JButton("Beenden");
+		newEntryButton = new JButton("neue Eintrag");
+		deleteEntryButton = new JButton("Eintrag löschen");
 		
+		calcButton.setBounds(offset, window.getHeight() - 150, width, height);
+		exitButton.setBounds((int)calcButton.getBounds().getX() + offset + width, 
+							 window.getHeight() - 150, width, height);
+		newEntryButton.setBounds((int)exitButton.getBounds().getX() + offset + width, 
+								 window.getHeight() - 150, width, height);
+		deleteEntryButton.setBounds((int)newEntryButton.getBounds().getX() + offset + width, 
+									window.getHeight() - 150, width, height);
+		
+		panel.add(calcButton);
+		panel.add(exitButton);
+		panel.add(newEntryButton);
+		panel.add(deleteEntryButton);
+		
+		createButtonActions();
 	}	
+	
+	private void createButtonActions() {
+		calcButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				Controller.clickCalc(calcButton);
+			}
+		});
+		
+		exitButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				Controller.clickExit(exitButton);
+			}
+		});
+		
+		newEntryButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				Controller.clickNewEntry(newEntryButton);
+			}
+		});
+		
+		deleteEntryButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				Controller.clickDeleteEntry(deleteEntryButton);
+			}
+		});
+		
+	}
+	
+	public JPanel getPanel() {
+		return panel;
+	}
+	
+	public JTextField getFixCostTxt() {
+		return fixcostTxt;
+	}
+	
+	public JTextField getVarCostTxt() {
+		return varcostTxt;
+	}
+	
+	public JTextField getPersonTxt() {
+		return personTxt;
+	}
 }
