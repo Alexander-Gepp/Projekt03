@@ -10,6 +10,7 @@ public class Controller {
 	private static int fixcostInput;
 	private static int varcostInput;
 	private static int personInput;
+	private static double discountInput;
 	private static GUI gui;
 	
 	public Controller() {
@@ -38,6 +39,7 @@ public class Controller {
 	}
 	
 	public static void clickExit(JButton exit) {
+		//Schließt die DB Connection und beendet das Programm
 		System.exit(0);
 		try {
 			Database.getConnection().close();
@@ -56,10 +58,12 @@ public class Controller {
 	}
 	
 	private static void getInputFromGUI(GUI gui) {
+		//Holt sich die Werte aus GUI und prüft auf ihre Korrektheit
 		try {
 			fixcostInput = Integer.parseInt(gui.getFixCostTxt().getText());
 			varcostInput = Integer.parseInt(gui.getVarCostTxt().getText());
 			personInput = Integer.parseInt(gui.getPersonTxt().getText());
+			discountInput = Double.parseDouble(gui.getDiscountTxt().getText());
 		}catch(NumberFormatException e) {
 			if(gui.getFixCostTxt().getText().isEmpty() || gui.getVarCostTxt().getText().isEmpty() 
 			|| gui.getPersonTxt().getText().isEmpty()) {
@@ -85,6 +89,7 @@ public class Controller {
 	}
 	
 	public static void dbOutputRoom(JTextArea dblist) {
+		//Holt sich alle Werte aus der Raumtabelle und gibt sie an der DB-Ausgabe aus
 		dblist.setText("");
 		try {
 			dblist.setText(Database.createStatementRoom("select * from raeume"));
@@ -95,6 +100,7 @@ public class Controller {
 	}
 	
 	public static void dbOutputVarCost(JTextArea dblist) {
+		//Holt sich alle Werte aus der Varkosten-Tabelle und gibt sie an der DB-Ausgabe aus
 		dblist.setText("");
 		try {
 			dblist.setText(Database.createStatementVarCost("select * from varkosten"));
@@ -105,6 +111,7 @@ public class Controller {
 	}
 	
 	private static void calculateResult() {
+		//Holt sich Daten aus der DB und verrechnet diese
 		double fixcostPrice;
 		double varcostPrice;
 		double perperson;
@@ -113,7 +120,7 @@ public class Controller {
 			fixcostPrice = Database.getPricesOfRoom(fixcostInput);
 			varcostPrice = Database.getPricesOfVarCost(varcostInput);
 			
-			perperson = Kostenkalkulation.calcPerPersonPrice(fixcostPrice, varcostPrice, personInput);
+			perperson = Kostenkalkulation.calcPerPersonPrice(fixcostPrice, varcostPrice, personInput, discountInput);
 			gui.getPerpersonLabel().setText(String.valueOf(perperson));
 						
 		}catch(SQLException sqle) {

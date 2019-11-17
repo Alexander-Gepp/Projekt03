@@ -206,6 +206,10 @@ public class GUI {
 		return personTxt;
 	}
 	
+	public JTextField getDiscountTxt() {
+		return discountTxt;
+	}
+	
 	public JTextArea getDBList() {
 		return databaseTxtList;
 	}
