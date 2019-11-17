@@ -85,6 +85,7 @@ public class GUI {
 		
 		databaseTxtList.setBounds(offset, (int)databaseLabel.getBounds().getY() + databaseLabel.getHeight() + 10, 
 								  width, height);
+		databaseTxtList.setEditable(false);
 		
 		panel.add(databaseTxtList);
 	}
@@ -160,5 +161,9 @@ public class GUI {
 	
 	public JTextField getPersonTxt() {
 		return personTxt;
+	}
+	
+	public JTextArea getDBList() {
+		return databaseTxtList;
 	}
 }
