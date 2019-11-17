@@ -8,6 +8,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.*;
+import javax.swing.event.CaretEvent;
+import javax.swing.event.CaretListener;
 
 public class GUI {
 
@@ -18,9 +20,11 @@ public class GUI {
 	private JLabel personLabel;
 	private JLabel databaseLabel;
 	private JLabel perpersonLabel;
+	private JLabel discountLabel;
 	private JTextField fixcostTxt;
 	private JTextField varcostTxt;
 	private JTextField personTxt;
+	private JTextField discountTxt;
 	private JTextArea databaseTxtList;
 	private JButton calcButton;
 	private JButton exitButton;
@@ -43,6 +47,7 @@ public class GUI {
 		window.setContentPane(panel);
 		
 		panel.setLayout(null);
+		panel.setBackground(new Color(200,200,200));
 	}
 	
 	public void createLabels(int width, int height, int offset) {
@@ -51,6 +56,7 @@ public class GUI {
 		personLabel = new JLabel("Personen:");
 		databaseLabel = new JLabel("Datenbankausgabe");
 		perpersonLabel = new JLabel();
+		discountLabel = new JLabel("Rabatt:");
 		
 		databaseLabel.setBounds(offset, 10, width, height);
 		fixcostLabel.setBounds(offset, window.getHeight() - 280, width, height);
@@ -62,11 +68,14 @@ public class GUI {
 								 width, height);
 		perpersonLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
 		
+		discountLabel.setBounds(offset, window.getHeight() - 220, width, height);
+		
 		panel.add(fixcostLabel);
 		panel.add(varcostLabel);
 		panel.add(personLabel);
 		panel.add(databaseLabel);
 		panel.add(perpersonLabel);
+		panel.add(discountLabel);
 		
 	}
 	
@@ -74,6 +83,7 @@ public class GUI {
 		fixcostTxt = new JTextField();
 		varcostTxt = new JTextField();
 		personTxt = new JTextField();
+		discountTxt = new JTextField();
 		
 		fixcostTxt.setBounds(offset, (int)fixcostLabel.getBounds().getY() + fixcostLabel.getHeight(),
 							 width, height);
@@ -83,10 +93,12 @@ public class GUI {
 		personTxt.setBounds((int)varcostTxt.getBounds().getX() + offset + width, 
 							 (int)fixcostLabel.getBounds().getY() + varcostLabel.getHeight(),
 							 width, height);
+		discountTxt.setBounds(offset, (int)fixcostTxt.getBounds().getY() + height + 40, width, height);
 		
 		panel.add(fixcostTxt);
 		panel.add(varcostTxt);
 		panel.add(personTxt);
+		panel.add(discountTxt);
 		
 		createTxtFieldActions();
 	}
@@ -159,17 +171,19 @@ public class GUI {
 	}
 	
 	private void createTxtFieldActions() {
-		fixcostTxt.addMouseListener(new MouseAdapter() {
+		fixcostTxt.addCaretListener(new CaretListener() {
+			
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void caretUpdate(CaretEvent e) {
 				// TODO Auto-generated method stub
 				Controller.dbOutputRoom(databaseTxtList);
 			}
 		});
 		
-		varcostTxt.addMouseListener(new MouseAdapter() {
+		varcostTxt.addCaretListener(new CaretListener() {
+			
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void caretUpdate(CaretEvent e) {
 				// TODO Auto-generated method stub
 				Controller.dbOutputVarCost(databaseTxtList);
 			}
