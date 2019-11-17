@@ -113,16 +113,14 @@ public class Controller {
 			fixcostPrice = Database.getPricesOfRoom(fixcostInput);
 			varcostPrice = Database.getPricesOfVarCost(varcostInput);
 			
-			if(personInput != 0) {
-				perperson = fixcostPrice + (varcostPrice * personInput) / personInput;
-				gui.getPerpersonLabel().setText(String.valueOf(perperson));
-			}else {
-				JOptionPane.showConfirmDialog(null, "Personen dürfen nicht 0 betragen", "Fehlermeldung",
-						  JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
-			}
-			
-		}catch(SQLException e) {
+			perperson = Kostenkalkulation.calcPerPersonPrice(fixcostPrice, varcostPrice, personInput);
+			gui.getPerpersonLabel().setText(String.valueOf(perperson));
+						
+		}catch(SQLException sqle) {
 			JOptionPane.showConfirmDialog(null, "Wert konnte nicht in der DB gefunden werden", "Fehlermeldung",
+					  JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+		}catch(ArithmeticException ae) {
+			JOptionPane.showConfirmDialog(null, "Personen ist kleiner oder gleich 0", "Fehlermeldung",
 					  JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
 		}
 	}
