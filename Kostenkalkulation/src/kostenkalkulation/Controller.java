@@ -30,7 +30,6 @@ public class Controller {
 	
 	public void createDB() {
 		connectToDatabase();
-		dbOutput(gui.getDBList());
 	}
 	
 	public static void clickCalc(JButton calculate) {
@@ -39,6 +38,12 @@ public class Controller {
 	
 	public static void clickExit(JButton exit) {
 		System.exit(0);
+		try {
+			Database.getConnection().close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public static void clickNewEntry(JButton newEntry) {
@@ -78,9 +83,20 @@ public class Controller {
 		}
 	}
 	
-	public void dbOutput(JTextArea dblist) {
+	public static void dbOutputRoom(JTextArea dblist) {
+		dblist.setText("");
 		try {
-			dblist.setText(Database.createStatement("select * from raeume"));
+			dblist.setText(Database.createStatementRoom("select * from raeume"));
+		}catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public static void dbOutputVarCost(JTextArea dblist) {
+		dblist.setText("");
+		try {
+			dblist.setText(Database.createStatementVarCost("select * from varkosten"));
 		}catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
