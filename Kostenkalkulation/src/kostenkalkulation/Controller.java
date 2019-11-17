@@ -7,8 +7,8 @@ import javax.swing.*;
 
 public class Controller {
 
-	private static double fixcostInput;
-	private static double varcostInput;
+	private static int fixcostInput;
+	private static int varcostInput;
 	private static int personInput;
 	private static GUI gui;
 	
@@ -34,6 +34,7 @@ public class Controller {
 	
 	public static void clickCalc(JButton calculate) {
 		getInputFromGUI(gui);
+		calculateResult();
 	}
 	
 	public static void clickExit(JButton exit) {
@@ -56,8 +57,8 @@ public class Controller {
 	
 	private static void getInputFromGUI(GUI gui) {
 		try {
-			fixcostInput = Double.parseDouble(gui.getFixCostTxt().getText());
-			varcostInput = Double.parseDouble(gui.getVarCostTxt().getText());
+			fixcostInput = Integer.parseInt(gui.getFixCostTxt().getText());
+			varcostInput = Integer.parseInt(gui.getVarCostTxt().getText());
 			personInput = Integer.parseInt(gui.getPersonTxt().getText());
 		}catch(NumberFormatException e) {
 			if(gui.getFixCostTxt().getText().isEmpty() || gui.getVarCostTxt().getText().isEmpty() 
@@ -100,6 +101,29 @@ public class Controller {
 		}catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+	}
+	
+	private static void calculateResult() {
+		double fixcostPrice;
+		double varcostPrice;
+		double perperson;
+		
+		try {
+			fixcostPrice = Database.getPricesOfRoom(fixcostInput);
+			varcostPrice = Database.getPricesOfVarCost(varcostInput);
+			
+			if(personInput != 0) {
+				perperson = fixcostPrice + (varcostPrice * personInput) / personInput;
+				gui.getPerpersonLabel().setText(String.valueOf(perperson));
+			}else {
+				JOptionPane.showConfirmDialog(null, "Personen dürfen nicht 0 betragen", "Fehlermeldung",
+						  JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+			}
+			
+		}catch(SQLException e) {
+			JOptionPane.showConfirmDialog(null, "Wert konnte nicht in der DB gefunden werden", "Fehlermeldung",
+					  JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
 		}
 	}
 }

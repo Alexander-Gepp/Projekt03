@@ -1,5 +1,6 @@
 package kostenkalkulation;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,6 +17,7 @@ public class GUI {
 	private JLabel varcostLabel;
 	private JLabel personLabel;
 	private JLabel databaseLabel;
+	private JLabel perpersonLabel;
 	private JTextField fixcostTxt;
 	private JTextField varcostTxt;
 	private JTextField personTxt;
@@ -48,6 +50,7 @@ public class GUI {
 		varcostLabel = new JLabel("Variable Kosten:");
 		personLabel = new JLabel("Personen:");
 		databaseLabel = new JLabel("Datenbankausgabe");
+		perpersonLabel = new JLabel();
 		
 		databaseLabel.setBounds(offset, 10, width, height);
 		fixcostLabel.setBounds(offset, window.getHeight() - 280, width, height);
@@ -55,11 +58,15 @@ public class GUI {
 							   width, height);
 		personLabel.setBounds((int)varcostLabel.getBounds().getX() + offset + width, window.getHeight() - 280,
 							  width, height);
+		perpersonLabel.setBounds((int)fixcostLabel.getBounds().getX() + offset + width, window.getHeight() - 200,
+								 width, height);
+		perpersonLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
 		
 		panel.add(fixcostLabel);
 		panel.add(varcostLabel);
 		panel.add(personLabel);
 		panel.add(databaseLabel);
+		panel.add(perpersonLabel);
 		
 	}
 	
@@ -187,5 +194,9 @@ public class GUI {
 	
 	public JTextArea getDBList() {
 		return databaseTxtList;
+	}
+	
+	public JLabel getPerpersonLabel() {
+		return perpersonLabel;
 	}
 }
